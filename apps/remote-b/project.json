@@ -1,0 +1,36 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "remote-b",
+  "root": "apps/remote-b",
+  "sourceRoot": "apps/remote-b",
+  "projectType": "application",
+  "targets": {
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rm -rf ../../dist/{projectRoot}",
+        "cwd": "apps/remote-b"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["clean"],
+      "options": {
+        "commands": [
+          "rsbuild build",
+          "mkdir -p ../../dist/{projectRoot}",
+          "cp -R ./doc_build/* ../../dist/{projectRoot}"
+        ],
+        "cwd": "apps/remote-b",
+        "parallel": false
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rsbuild dev --open",
+        "cwd": "apps/remote-b"
+      }
+    }
+  }
+}
